@@ -163,13 +163,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ff2a4012be1b64d91d05c430b7a19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mPort: 13579
-  mBufferSize: 16
-  mUseStreamingAssetsPath: 1
+  port: 13579
+  bufferSize: 16
+  useStreamingAssetsPath: 1
   mPath: 
-  mController: {fileID: 0}
+  controller: {fileID: 0}
   mStartOnAwake: 1
-  mOpenUrlAfterStarted: 0
+  mOpenUrlAfterStarted: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

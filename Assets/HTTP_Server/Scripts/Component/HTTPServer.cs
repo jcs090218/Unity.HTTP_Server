@@ -17,26 +17,22 @@ namespace com.jcs090218.HTTP_Server
         [Header("Socket Settings")]
 
         [Tooltip("Port used for the server.")]
-        [SerializeField]
-        private int mPort = 13579;  // 0 - 65535
+        public int port = 13579;  // 0 - 65535
 
         [Tooltip("IO buffer size.")]
-        [SerializeField]
-        private int mBufferSize = 16;
+        public int bufferSize = 16;
 
         [Header("Custom Settings")]
 
         [Tooltip("If enabled, use streaming asset path instead of custom path.")]
-        [SerializeField]
-        private bool mUseStreamingAssetsPath = false;
+        public bool useStreamingAssetsPath = false;
 
         [Tooltip("The root directory for the http server to host.")]
         [SerializeField]
-        private string mPath;
+        private string mPath = "";
 
         [Tooltip("Controller used to interact with the server.")]
-        [SerializeField]
-        private MonoBehaviour mController = null;
+        public MonoBehaviour controller = null;
 
         [Header("Other Settings")]
 
@@ -50,19 +46,19 @@ namespace com.jcs090218.HTTP_Server
 
         /* Setter & Getter */
 
-        public int port { get { return mPort; } }
-
         public string path
         {
             get
             {
-                if (mUseStreamingAssetsPath)
+                if (useStreamingAssetsPath)
                 {
                     return Application.streamingAssetsPath;
                 }
 
                 return mPath;
             }
+
+            set { mPath = value; }
         }
 
         /* Functions */
@@ -92,14 +88,14 @@ namespace com.jcs090218.HTTP_Server
             {
                 if (!force)
                 {
-                    Debug.LogWarning("Server has already started in port: " + mPort);
+                    Debug.LogWarning("Server has already started in port: " + port);
                     return;
                 }
 
                 Stop();
             }
 
-            mServer = new HTTP_Server(path, port, mBufferSize, mController);
+            mServer = new HTTP_Server(path, port, bufferSize, controller);
 
             mServer.OnJsonSerialized += (result) =>
             {
@@ -110,7 +106,7 @@ namespace com.jcs090218.HTTP_Server
 #endif
             };
 
-            Debug.Log("Server started in port: " + mPort);
+            Debug.Log("Server started in port: " + port);
 
             if (mOpenUrlAfterStarted)
             {
@@ -152,7 +148,7 @@ namespace com.jcs090218.HTTP_Server
 
         public string GetUrl()
         {
-            return GetLocalIPAddress() + ":" + mPort;
+            return GetLocalIPAddress() + ":" + port;
         }
 
         /// <summary>

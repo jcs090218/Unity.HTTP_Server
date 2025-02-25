@@ -15,6 +15,7 @@ Key improvements over the original:
 - Enhanced control over `MonoBehaviour`
 - Support for multiple instances
 - Packaged for easy deployment
+- Handle routing
 
 ## ⚜️ License
 

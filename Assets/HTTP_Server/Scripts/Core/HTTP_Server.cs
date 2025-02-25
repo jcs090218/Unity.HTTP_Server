@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Reflection;
+using Debug = UnityEngine.Debug;
 
 namespace com.jcs090218.HTTP_Server
 {
@@ -229,22 +230,34 @@ body{
         private void Process(HttpListenerContext context)
         {
             string filename = context.Request.Url.AbsolutePath;
+
+            // Returns empty string when at the root level;
+            // returns `nested/` if routing.
             filename = filename.Substring(1);
 
-            if (string.IsNullOrEmpty(filename))
+            // Handle possible index files.
             {
+                // Handle routing.
+                string route = Path.Combine(mRootDir, filename);
+
                 foreach (string indexFile in INDEX_FILES)
                 {
-                    string file = Path.Combine(mRootDir, indexFile);
+                    // Get full path: `/path/to/index.html`
+                    // If routing:    `/path/to/nested/index.html`
+                    string file = Path.Combine(route, indexFile);
 
                     if (File.Exists(file))
                     {
-                        filename = indexFile;
+                        // Return `index.html` at root level;
+                        // return `nested/index.html` when nested.
+                        filename = Path.Combine(filename, indexFile);
                         break;
                     }
                 }
             }
 
+            // XXX: This is redundant and can easily solve in above code;
+            // but whatever, I'm okay with it for now.
             filename = Path.Combine(mRootDir, filename);
 
             var namedParameters = new Dictionary<string, object>();
@@ -283,7 +296,7 @@ body{
                 catch (Exception ex)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    UnityEngine.Debug.LogError(ex);
+                    Debug.LogError(ex);
 
                     context.Response.StatusDescription = ex.Message;
                     goto WebResponse;
@@ -296,7 +309,7 @@ body{
                 string json = "";
                 if (OnJsonSerialized == null)
                 {
-                    UnityEngine.Debug.LogError("There is no JsonSerialize delegate regist on SimpleHTTPServer.OnJsonSerialized");
+                    Debug.LogError("There is no JsonSerialize delegate regist on SimpleHTTPServer.OnJsonSerialized");
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.StatusDescription = "There is no JsonSerialize delegate regist on SimpleHTTPServer.OnJsonSerialized";
                     goto WebResponse;
@@ -376,7 +389,7 @@ body{
                 catch (Exception ex)
                 {
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    UnityEngine.Debug.LogError(ex);
+                    Debug.LogError(ex);
                     context.Response.StatusDescription = ex.Message;
                 }
             }
