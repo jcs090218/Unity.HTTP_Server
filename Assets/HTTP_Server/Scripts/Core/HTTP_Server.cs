@@ -71,7 +71,7 @@ body{
 </body>
 ";
 
-        private static Dictionary<string, string> MIME_TYPE_MAPPINGS = new (StringComparer.InvariantCultureIgnoreCase)
+        private static Dictionary<string, string> MIME_TYPE_MAPPINGS = new(StringComparer.InvariantCultureIgnoreCase)
         {
             #region extension to MIME type list
             { ".asf", "video/x-ms-asf" },
@@ -169,7 +169,7 @@ body{
 
         /* Functions */
 
-        public HTTP_Server(string path, int port, int buffer, System.Object controller)
+        public HTTP_Server(string path, int port, int buffer, Object controller)
             : this(path, port, buffer)
         {
             this.mMethodController = controller;
@@ -185,7 +185,7 @@ body{
         {
             this.mRootDir = path;
             this.mPort = port;
-            
+
             // Start listening.
             mTServer = new Thread(this.Listen);
             mTServer.Start();
@@ -216,8 +216,11 @@ body{
         /// </summary>
         public void Stop()
         {
-            mTServer.Abort();
-            mListener.Stop();
+            if (mTServer != null)
+                mTServer.Abort();
+
+            if (mListener != null)
+                mListener.Stop();
         }
 
         /// <summary>
@@ -232,7 +235,9 @@ body{
             {
                 foreach (string indexFile in INDEX_FILES)
                 {
-                    if (File.Exists(Path.Combine(mRootDir, indexFile)))
+                    string file = Path.Combine(mRootDir, indexFile);
+
+                    if (File.Exists(file))
                     {
                         filename = indexFile;
                         break;
@@ -254,7 +259,7 @@ body{
                 foreach (var item in query)
                 {
                     var t = item.Split('=');
-                    
+
                     namedParameters.Add(t[0], t[1]);
                 }
             }
@@ -327,7 +332,7 @@ body{
                 context.Response.ContentType = "text/html";
                 context.Response.ContentLength64 = resultByte.Length;
                 context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
-                context.Response.AddHeader("Last-Modified", System.IO.File.GetLastWriteTime(filename).ToString("r"));
+                context.Response.AddHeader("Last-Modified", File.GetLastWriteTime(filename).ToString("r"));
 
                 byte[] buffer = new byte[1024 * mBuffSize];
                 int nbytes = -1;
@@ -356,7 +361,7 @@ body{
                     context.Response.ContentType = MIME_TYPE_MAPPINGS.TryGetValue(Path.GetExtension(filename), out mime) ? mime : "application/octet-stream";
                     context.Response.ContentLength64 = input.Length;
                     context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
-                    context.Response.AddHeader("Last-Modified", System.IO.File.GetLastWriteTime(filename).ToString("r"));
+                    context.Response.AddHeader("Last-Modified", File.GetLastWriteTime(filename).ToString("r"));
 
                     byte[] buffer = new byte[1024 * mBuffSize];
                     int nbytes = -1;

@@ -7,6 +7,12 @@ namespace com.jcs090218.HTTP_Server
 {
     public static class Util
     {
+        /* Variables */
+
+        /* Setter & Getter */
+
+        /* Functions */
+
         public static object InvokeWithNamedParameters(this MethodBase self, object obj, IDictionary<string, object> namedParameters)
         {
             return self.Invoke(obj, MapParameters(self, namedParameters));
