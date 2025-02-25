@@ -5,17 +5,16 @@
 # Unity.HTTP_Server
 > A simple C# HTTP server implementation for Unity
 
-This project is based on `@sableangle`'s [UnityHTTPServer][]
-, however it doesn't have any license and it seems like is no longer being maintained.
-The goal of this project is to modified the code apart from the original version
-and license with a valid open source license.
+This project is inspired by `@sableangle`'s [UnityHTTPServer][].
+However, the original repository lacks a license and appears to be unmaintained.
+The goal of this project is to modify the existing code, diverging from the
+original, and release it under a valid open-source license.
 
-Furthermore, this project adds more control to the http server, provides
-more fexiability to the user.
+Some differences between the two projects:
 
-- More control on the `MonoBehaviour`
-- Support multiple instances
-- Bundle into a ready to use package
+- Improved control over `MonoBehaviour`
+- Support for multiple instances
+- Packaged as a ready-to-use solution
 
 ## ⚜️ License
 
