@@ -5,3 +5,11 @@
 # Unity.HTTP_Server
 
 A simple C# HTTP server implementation for Unity
+
+## Supported Platforms
+
+- [x] iOS (test pass)
+- [x] OSX Editor
+- [x] OSX Player
+- [x] Windows Editor
+- [x] Windows Player
