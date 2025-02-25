@@ -1,10 +1,13 @@
-using System.Net.Sockets;
-using System.Net;
 using System;
+using System.Net;
+using System.Net.Sockets;
 using UnityEngine;
 
 namespace com.jcs090218.HTTP_Server
 {
+    /// <summary>
+    /// HTTP server component.
+    /// </summary>
     public class HTTPServer : MonoBehaviour
     {
         /* Variables */
