@@ -17,6 +17,12 @@ Key improvements over the original:
 - Packaged for easy deployment
 - Handle routing
 
+## 💾 Installation
+
+This project has pre-built `.unitypackage` file, which you can download from our [release](https://github.com/jcs090218/Unity.HTTP_Server/releases) page.
+
+Simply import it into your Unity project.
+
 ## ⚜️ License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
